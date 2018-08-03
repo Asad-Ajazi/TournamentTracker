@@ -1,0 +1,35 @@
+All requirements will go here.
+=============================================
+Basic requirements:
+Track the games played and who won.
+Multiple people can play in the tournament
+Create a plan, what order do people play in?
+Schedule games
+A single loss eliminates a player.
+Last person standing is the winner.
+
+============================================
+A bit more detail(inital requirements):
+-A variable number of players.
+-If not enough players then a "byes" system will allow a player to skip a round.
+-Matches are assigned at random.
+-The games are played in whatever order and whenever the players want to play.
+-Games are not scheduled.
+-Each round must be fully completed before the next round is displayed.
+-CAN have a simple scoring tracker, 1 for a win, 0 for a loss.
+-The program will be a desktop system for now (windows form), but should be able to change later(to a web page or app).
+-Data ideally stored in a MSSQL DB but should also store to a text file.
+-The tounament will have an option of charging an entry fee/ Prizes are an option(admins choose how much money to award for places, e.g. 1st 2nd etc.(cant exceed the total income from entry fees. possible percentage based system.))
+-Reporting for outcomes of games per round, also who won/how much they won. (can be on a form or emailed to players/admin).
+-Anyone using the app can fill in game scores (no logins).
+-App might be only on admin machine, and users email results to them.
+-E-mails sent to users for when and who they are due to play.
+-Teams are an option. team members are equal, they all get emails and can even name their team.
+====================================================
+OVERVIEW~DESIGN
+Structure:Windows Froms application + Class Library.
+Data:SQL and/or Text File storage.
+Users: One at a time on a single application.
+
+EMAIL/SQL/CUSTOM_EVENTS/ERROR_HANDLING/
+INTERFACES/RANDOM_ORDERING/texting?
