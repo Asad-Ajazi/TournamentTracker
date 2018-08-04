@@ -70,7 +70,8 @@ MatchupEntry:
 	Score(double)
 	ParentMatchup(Matchup) - where the team came from, the round before.
 
-
-
+================================================================
+USER INTERFACE PLANNED ON PAPER####
+===============================================================
 
 
