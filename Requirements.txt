@@ -33,3 +33,44 @@ Users: One at a time on a single application.
 
 EMAIL/SQL/CUSTOM_EVENTS/ERROR_HANDLING/
 INTERFACES/RANDOM_ORDERING/texting?
+========================================================================
+
+Mapping data:
+
+Team:
+	TeamMembers(List<Person>)
+	TeamName(string)
+
+Person:
+	FirstName(string)
+	LastName(string)
+	EmailAddress(string)
+	MobileNumber(string)*
+
+Tournament:
+	TournamentName(string)
+	EntryFree(decimal)
+	EnteredTeams(List<Team>)
+	Prizes(List<Prize>)
+	Round(List<List<Matchup>>) - list of matchups per round, and a list of those. so a list of another list.
+
+Prize:
+	PlaceNumber(int) - or position
+	PlaceName(string) - winner, runner up, champion etc.
+	PrizeAmount(decimal) - fixed amout
+	PrizePercentage(double) - %
+
+Matchup:
+	Entry(List<MatchupEntry>)
+	Winner(Team)
+	MatchRound(int) - the round number
+
+MatchupEntry:
+	TeamCompeting(Team)
+	Score(double)
+	ParentMatchup(Matchup) - where the team came from, the round before.
+
+
+
+
+
