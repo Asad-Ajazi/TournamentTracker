@@ -9,17 +9,21 @@ namespace TrackerLibrary
     public static class GlobalConfig
     {
         //List to hold one or more data sources the data will be saved to/ pulled from.
-        public static List<IDataConnection> Connections { get; private set; }
+        public static List<IDataConnection> Connections { get; private set; } = new List<IDataConnection>();
 
         public static void InitializeConnections(bool database, bool textfile)
         {
             if (database)
             {
-                // TODO - create connection to database
+                // TODO - Setup sql connection
+                SqlConnector sql = new SqlConnector();
+                Connections.Add(sql);
             }
             if (textfile)
             {
-                // TODO - create connection to text file.
+                // TODO - setup text connection
+                TextConnection textConnection = new TextConnection();
+                Connections.Add(textConnection);
             }
         }
     }

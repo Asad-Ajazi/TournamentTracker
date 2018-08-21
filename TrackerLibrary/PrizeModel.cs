@@ -33,5 +33,34 @@ namespace TrackerLibrary
         /// </summary>
         public double PrizePercentage { get; set; }
 
+        public PrizeModel()
+        {
+
+        }
+
+        /// <summary>
+        /// Convert inputs and create PrizeModel 
+        /// </summary>
+        /// <param name="placeName"></param>
+        /// <param name="placeNumber"></param>
+        /// <param name="prizeAmount"></param>
+        /// <param name="prizePercentage"></param>
+        public PrizeModel(string placeName, string placeNumber, string prizeAmount, string prizePercentage)
+        {
+            PlaceName = placeName;
+
+            int.TryParse(placeNumber, out int placeNumberValue);
+            PlaceNumber = placeNumberValue;
+
+            decimal.TryParse(prizeAmount, out decimal prizeAmountValue);
+            PrizeAmount = prizeAmountValue;
+
+            double.TryParse(prizePercentage, out double prizePercentageValue);
+            PrizePercentage = prizePercentageValue;
+
+
+
+        }
+
     }
 }
