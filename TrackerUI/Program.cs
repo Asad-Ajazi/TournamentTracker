@@ -17,6 +17,8 @@ namespace TrackerUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+
             //initialize the data connections
             TrackerLibrary.GlobalConfig.InitializeConnections(true, true);
 
