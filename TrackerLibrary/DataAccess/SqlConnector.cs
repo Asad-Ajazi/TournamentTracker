@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +18,23 @@ namespace TrackerLibrary.DataAccess
         /// <returns>Prize information including id</returns>
         public PrizeModel CreatePrize(PrizeModel model)
         {
-            // TODO - implement the CreatePrize method (save to the database.)
-            model.Id = 1;
-            return model;
+            // using statement destroys the connection at the end of the closing curly brace }
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConString("Tournaments")))
+            {
+                var p = new DynamicParameters();
+                p.Add("@PlaceNumber", model.PlaceNumber);
+                p.Add("@PlaceName", model.PlaceName);
+                p.Add("@PrizeAmount", model.PrizeAmount);
+                p.Add("@PrizePercentage", model.PrizePercentage);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                connection.Execute("dbo.spPrize_insert", p, commandType: CommandType.StoredProcedure);
+
+                model.Id = p.Get<int>("@id");
+
+                return model;
+            }
+
         }
     }
 }
