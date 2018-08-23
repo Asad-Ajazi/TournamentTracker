@@ -30,6 +30,7 @@ namespace TrackerLibrary.DataAccess
 
                 connection.Execute("dbo.spPrize_insert", p, commandType: CommandType.StoredProcedure);
 
+                //sets the model.id to the value of the id that was inserted.
                 model.Id = p.Get<int>("@id");
 
                 return model;
