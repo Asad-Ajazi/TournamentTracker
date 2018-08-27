@@ -11,6 +11,28 @@ namespace TrackerLibrary.DataAccess
 {
     public class SqlConnector : IDataConnection
     {
+        public PersonModel CreatePerson(PersonModel model)
+        {
+            // using statement destroys the connection at the end of the closing curly brace }
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConString("Tournaments")))
+            {
+                var p = new DynamicParameters();
+                p.Add("@FirstName", model.FirstName);
+                p.Add("@LastName", model.LastName);
+                p.Add("@EmailAddress", model.EmailAddress);
+                //phone number and mobile number are the same.
+                p.Add("@PhoneNumber", model.MobileNumber);
+                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                connection.Execute("dbo.spPerson_insert", p, commandType: CommandType.StoredProcedure);
+
+                //sets the model.id to the value of the id that was inserted.
+                model.Id = p.Get<int>("@id");
+
+                return model;
+            }
+        }
+
         /// <summary>
         /// Stores a new prize to the database
         /// </summary>

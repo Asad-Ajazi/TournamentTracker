@@ -8,6 +8,12 @@ namespace TrackerLibrary.Models
 {
     public class PersonModel
     {
+
+        /// <summary>
+        /// The unique identifier for the prize.
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// The users first name.
         /// </summary>

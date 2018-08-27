@@ -72,6 +72,27 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             return output;
         }
 
+        public static List<PersonModel> ConvertToPersonModels(this List<string> lines)
+        {
+            List<PersonModel> output = new List<PersonModel>();
+
+            foreach (string line in lines)
+            {
+                string[] col = line.Split(',');
+
+                //convert the text to a list of PeopleModel.
+                PersonModel p = new PersonModel();
+                p.Id = int.Parse(col[0]);
+                p.FirstName = col[1];
+                p.LastName = col[2];
+                p.EmailAddress = col[3];
+                p.MobileNumber = col[4];
+                output.Add(p);
+            }
+
+            return output;
+        }
+
         /// <summary>
         /// Converts list of PrizeModel to List of string and writes contents to file.
         /// </summary>
@@ -89,6 +110,20 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             File.WriteAllLines(fileName.FullFilePath(), lines);
         }
 
+        public static void SaveToPersonFile(this List<PersonModel> models, string fileName)
+        {
+            List<string> lines = new List<string>();
+
+            foreach (PersonModel p in models)
+            {
+                lines.Add($"{p.Id},{p.FirstName},{p.LastName},{p.EmailAddress},{p.MobileNumber}");
+            }
+
+            File.WriteAllLines(fileName.FullFilePath(), lines);
+        }
+    }
+
+
         #endregion
     }
-}
+

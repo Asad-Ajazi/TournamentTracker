@@ -27,9 +27,10 @@ namespace TrackerUI
                 PrizeModel model = new PrizeModel(placeNameValue.Text, placeNumberValue.Text, prizeAmountValue.Text, prizePercentageValue.Text);
 
                 GlobalConfig.Connection.CreatePrize(model);
-                
-                ClearPrizeFormFields();
+
                 MessageBox.Show("New prize was added");
+                ClearPrizeFormFields();
+                
 
             }
             else
