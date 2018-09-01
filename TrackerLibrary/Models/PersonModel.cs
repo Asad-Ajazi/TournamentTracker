@@ -34,5 +34,15 @@ namespace TrackerLibrary.Models
         /// </summary>
         public string MobileNumber { get; set; }
 
+        
+        /// <summary>
+        /// read only full name property.
+        /// </summary>
+        public string FullName
+        {
+            get { return $"{FirstName} {LastName}"; }
+        }
+
+
     }
 }

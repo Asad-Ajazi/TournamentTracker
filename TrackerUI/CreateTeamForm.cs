@@ -14,9 +14,44 @@ namespace TrackerUI
 {
     public partial class CreateTeamForm : Form
     {
+        //Lists that will populate the dropdown and list box on the create team form from the datasource.
+        private List<PersonModel> availableTeamMembers = GlobalConfig.Connection.GetPerson_All();
+        private List<PersonModel> selectedTeamMembers = new List<PersonModel>();
+
         public CreateTeamForm()
         {
             InitializeComponent();
+            //SampleData();
+            WireUpLists();
+        }
+
+
+        /// <summary>
+        /// sample data to test if the list populates correctly
+        /// </summary>
+        private void SampleData()
+        {
+            availableTeamMembers.Add(new PersonModel { FirstName = "Bob", LastName = "Jones" });
+            availableTeamMembers.Add(new PersonModel { FirstName = "Forest", LastName = "Mike" });
+
+            selectedTeamMembers.Add(new PersonModel { FirstName = "Harry", LastName = "Kane" });
+            selectedTeamMembers.Add(new PersonModel { FirstName = "Kate", LastName = "Julian" });
+
+        }
+
+        /// <summary>
+        /// Wires up the datasources to the dropdown and listbox.
+        /// </summary>
+        public void WireUpLists()
+        {
+            selectTeamMemberDropDown.DataSource = null;
+            selectTeamMemberDropDown.DataSource = availableTeamMembers;
+            selectTeamMemberDropDown.DisplayMember = "FullName";
+
+
+            teamMembersListBox.DataSource = null;
+            teamMembersListBox.DataSource = selectedTeamMembers;
+            teamMembersListBox.DisplayMember = "FullName";
         }
 
         private void createMemberButton_Click(object sender, EventArgs e)
@@ -29,7 +64,10 @@ namespace TrackerUI
                 p.EmailAddress = emailValue.Text;
                 p.MobileNumber = phoneValue.Text;
 
-                GlobalConfig.Connection.CreatePerson(p);
+                p = GlobalConfig.Connection.CreatePerson(p);
+
+                selectedTeamMembers.Add(p);
+                WireUpLists();
 
                 MessageBox.Show($"{p.FirstName} {p.LastName} was added to the list.");
                 ClearPrizeFormFields();
@@ -70,5 +108,32 @@ namespace TrackerUI
             phoneValue.Text = string.Empty;
         }
         #endregion
+
+        private void addMemberButton_Click(object sender, EventArgs e)
+        {
+            PersonModel person = (PersonModel)selectTeamMemberDropDown.SelectedItem;
+            // Remove a person from the available list to the selected list.
+            if (person != null)
+            {
+                availableTeamMembers.Remove(person);
+                selectedTeamMembers.Add(person);
+
+                WireUpLists(); 
+            }
+
+        }
+
+        private void removeSelectedMemberButton_Click(object sender, EventArgs e)
+        {
+            PersonModel person = (PersonModel)teamMembersListBox.SelectedItem;
+            // Remove a person from the selected list to the available list.
+            if (person != null)
+            {
+                selectedTeamMembers.Remove(person);
+                availableTeamMembers.Add(person);
+
+                WireUpLists(); 
+            }
+        }
     }
 }

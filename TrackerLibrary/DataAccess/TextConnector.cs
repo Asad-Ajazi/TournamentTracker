@@ -17,6 +17,7 @@ namespace TrackerLibrary.DataAccess
 
         public PersonModel CreatePerson(PersonModel model)
         {
+            //read all the people in the text file.
             List<PersonModel> person = PersonFile.FullFilePath().LoadFile().ConvertToPersonModels();
 
             // If there is no file, the default id of 1 will be used to create it.
@@ -31,8 +32,6 @@ namespace TrackerLibrary.DataAccess
 
             // Add new record with new ID (max + 1)
             person.Add(model);
-
-
 
             // Convert prizes to list<string>.
             // Save list<string> to text file.
@@ -64,6 +63,11 @@ namespace TrackerLibrary.DataAccess
             // Save list<string> to text file.
             prizes.SaveToPrizesFile(PrizesFile);
             return model;
+        }
+
+        public List<PersonModel> GetPerson_All()
+        {
+            return PersonFile.FullFilePath().LoadFile().ConvertToPersonModels();
         }
     }
 }
