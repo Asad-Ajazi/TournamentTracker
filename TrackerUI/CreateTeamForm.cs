@@ -14,13 +14,15 @@ namespace TrackerUI
 {
     public partial class CreateTeamForm : Form
     {
+        private ITeamRequester callingForm;
         //Lists that will populate the dropdown and list box on the create team form from the datasource.
         private List<PersonModel> availableTeamMembers = GlobalConfig.Connection.GetPerson_All();
         private List<PersonModel> selectedTeamMembers = new List<PersonModel>();
 
-        public CreateTeamForm()
+        public CreateTeamForm(ITeamRequester caller)
         {
             InitializeComponent();
+            callingForm = caller;
             //SampleData();
             WireUpLists();
         }
@@ -143,9 +145,12 @@ namespace TrackerUI
             t.TeamName = teamNameValue.Text;
             t.TeamMembers = selectedTeamMembers;
 
-            t = GlobalConfig.Connection.CreateTeam(t);
+            GlobalConfig.Connection.CreateTeam(t);
 
-            // TODO - Reset the form if not closing after creation.
+            callingForm.TeamComplete(t);
+            MessageBox.Show("Team created");
+            this.Close();
+            
         }
     }
 }
