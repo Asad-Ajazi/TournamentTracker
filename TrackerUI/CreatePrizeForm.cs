@@ -15,9 +15,12 @@ namespace TrackerUI
 {
     public partial class CreatePrizeForm : Form
     {
-        public CreatePrizeForm()
+        // Interface used to call the model in the createPrizeButton_Click event.
+        IPrizeRequester callingForm;
+        public CreatePrizeForm(IPrizeRequester caller)
         {
             InitializeComponent();
+            callingForm = caller;
         }
 
         private void createPrizeButton_Click(object sender, EventArgs e)
@@ -28,9 +31,14 @@ namespace TrackerUI
 
                 GlobalConfig.Connection.CreatePrize(model);
 
+                // This returns the model to the caller
+                callingForm.PrizeComplete(model);
+
                 MessageBox.Show("New prize was added");
-                ClearPrizeFormFields();
-                
+                ClearPrizeFormFields(); // not needed because we are closing now.
+
+                //closing the form after the model is passed back and prize has been created.
+                this.Close();
 
             }
             else
