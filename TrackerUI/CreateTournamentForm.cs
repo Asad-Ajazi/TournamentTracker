@@ -26,7 +26,6 @@ namespace TrackerUI
 
         private void PopulateList()
         {
-
             selectTeamDropDown.DataSource = null;
             selectTeamDropDown.DataSource = availableTeams;
             selectTeamDropDown.DisplayMember = "TeamName";
@@ -42,7 +41,6 @@ namespace TrackerUI
 
         private void addTeamButton_Click(object sender, EventArgs e)
         {
-
             TeamModel team = (TeamModel)selectTeamDropDown.SelectedItem;
             if (team != null)
             {
@@ -51,9 +49,6 @@ namespace TrackerUI
 
                 PopulateList();
             }
-
-
-
         }
 
         private void createPrizeButton_Click(object sender, EventArgs e)
@@ -61,8 +56,6 @@ namespace TrackerUI
             // Call the CreatePrizeForm;
             CreatePrizeForm frm = new CreatePrizeForm(this); //this represents this instance of the form.
             frm.Show();
-
-
         }
 
         public void PrizeComplete(PrizeModel model)
@@ -71,7 +64,6 @@ namespace TrackerUI
             //take it into the listbox.
             selectedPrizes.Add(model);
             PopulateList();
-
         }
 
         public void TeamComplete(TeamModel model)
@@ -96,8 +88,6 @@ namespace TrackerUI
                 availableTeams.Add(t);
                 PopulateList();
             }
-
-
         }
 
         private void removeSelectedPrizeButton_Click(object sender, EventArgs e)
@@ -109,6 +99,35 @@ namespace TrackerUI
                 selectedPrizes.Remove(p);
                 PopulateList();
             }
+        }
+
+        private void createTournamentButton_Click(object sender, EventArgs e)
+        {
+            //ensure fee is valid decimal.
+            decimal fee = 0;
+            bool feeValid = decimal.TryParse(entryFeeValue.Text, out fee);
+
+            if (!feeValid)
+            {
+                MessageBox.Show("Please enter a valid Entry Fee", "Invalid Fee", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Create a tournament model.
+            TournamentModel tm = new TournamentModel();
+
+            tm.TournamentName = tournamentNameValue.Text;
+            tm.Entryfee = fee;
+
+            tm.Prizes = selectedPrizes;
+            tm.EnteredTeams = selectedTeams;
+
+            // Create the tournament entry. 
+            // Create the prize entries.
+            // Create the team entries. (in this specific order so they work with the database)
+
+            // Create the matchups.
+
         }
     }
 }
