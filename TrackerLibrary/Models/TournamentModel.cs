@@ -36,7 +36,7 @@ namespace TrackerLibrary.Models
         public List<PrizeModel> Prizes { get; set; } = new List<PrizeModel>();
 
         /// <summary>
-        /// The current round of the tournament.
+        /// The current round of the tournament, a list of list of matchupmodels.
         /// </summary>
         public List<List<MatchupModel>> Rounds { get; set; } = new List<List<MatchupModel>>();
 

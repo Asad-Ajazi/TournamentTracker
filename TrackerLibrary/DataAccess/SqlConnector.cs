@@ -90,7 +90,7 @@ namespace TrackerLibrary.DataAccess
             }
         }
 
-        public TournamentModel CreateTournament(TournamentModel model)
+        public void CreateTournament(TournamentModel model)
         {
             // using statement destroys the connection at the end of the closing curly brace }
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConString(dbName)))
@@ -98,7 +98,7 @@ namespace TrackerLibrary.DataAccess
                 SaveTournament(connection, model);
                 SaveTournamentPrizes(connection, model);
                 SaveTournamentEntries(connection, model);
-                return model;
+                //return model;
             }
         }
 
