@@ -16,7 +16,7 @@ namespace TrackerLibrary.Models
         /// <summary>
         /// A list of matchups for the tournament.
         /// </summary>
-        public List<MatchupEntryModel> Entry { get; set; }
+        public List<MatchupEntryModel> Entry { get; set; } = new List<MatchupEntryModel>();
 
         /// <summary>
         /// The team that won the current round.

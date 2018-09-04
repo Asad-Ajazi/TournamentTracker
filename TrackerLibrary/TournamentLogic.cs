@@ -19,6 +19,77 @@ namespace TrackerLibrary
             int round = FindNumOfRounds(randomziedTeams.Count);
             int byes = NumberOfByes(round, randomziedTeams.Count);
 
+            model.Rounds.Add(CreateFirstRound(byes, randomziedTeams));
+            CreateOtherRounds(model, round);
+
+        }
+
+        /// <summary>
+        /// Creates the remaining rounds for the tournament.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="round"></param>
+        private static void CreateOtherRounds(TournamentModel model, int rounds)
+        {
+            // First round is already taken care of so we start at round 2.
+            int round = 2;
+            List<MatchupModel> previousRound = model.Rounds[0];
+            List<MatchupModel> currentRound = new List<MatchupModel>();
+            MatchupModel currentMatchup = new MatchupModel();
+
+            // populates the model with every set of rounds.
+            while (round <= rounds)
+            {
+                foreach (MatchupModel m in previousRound)
+                {
+                    currentMatchup.Entry.Add(new MatchupEntryModel { ParentMatchup = m });
+
+                    if (currentMatchup.Entry.Count > 1)
+                    {
+                        currentMatchup.MatchRound = round;
+                        currentRound.Add(currentMatchup);
+                        currentMatchup = new MatchupModel();
+                    }
+                }
+                model.Rounds.Add(currentRound);
+                previousRound = currentRound;
+                currentRound = new List<MatchupModel>();
+                round += 1;
+            }
+
+        }
+
+        /// <summary>
+        /// Creates the matchups for the first round.
+        /// </summary>
+        /// <param name="byes"></param>
+        /// <param name="teams"></param>
+        /// <returns></returns>
+        private static List<MatchupModel> CreateFirstRound(int byes, List<TeamModel> teams)
+        {
+            List<MatchupModel> output = new List<MatchupModel>();
+            MatchupModel current = new MatchupModel();
+            
+            // a single team is only half of a matchup, find other half before adding to 'current'.
+            foreach (TeamModel team in teams)
+            {
+                current.Entry.Add(new MatchupEntryModel { TeamCompeting = team });
+
+                // byes will be added to the first teams in the list.
+                if (byes > 0 || current.Entry.Count > 1)
+                {
+                    // first round will always be hard coded to 1.
+                    current.MatchRound = 1;
+                    output.Add(current);
+                    current = new MatchupModel();
+
+                    if (byes > 0)
+                    {
+                        byes -= 1;
+                    }
+                }                
+            }
+            return output;
         }
 
         /// <summary>
