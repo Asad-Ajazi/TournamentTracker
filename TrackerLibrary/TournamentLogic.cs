@@ -16,8 +16,29 @@ namespace TrackerLibrary
         public static void CreateRounds(TournamentModel model)
         {
             List<TeamModel> randomziedTeams = RandomizeTeamOrder(model.EnteredTeams);
-            int round = FindNumOfRound(randomziedTeams.Count);
+            int round = FindNumOfRounds(randomziedTeams.Count);
+            int byes = NumberOfByes(round, randomziedTeams.Count);
 
+        }
+
+        /// <summary>
+        /// Calculates the number of byes needed (if any) for the tournament.
+        /// </summary>
+        /// <param name="rounds"></param>
+        /// <param name="teamcount"></param>
+        /// <returns></returns>
+        private static int NumberOfByes(int rounds, int teamcount)
+        {
+            int output = 0;
+            int totalTeams = 1;
+
+            // starting on a 1 based counting systems to *2.
+            for (int i = 1; i <= rounds; i++)
+            {
+                totalTeams *= 2;
+            }
+            output = totalTeams - teamcount;
+            return output;
         }
 
         /// <summary>
@@ -25,7 +46,7 @@ namespace TrackerLibrary
         /// </summary>
         /// <param name="teamcount"></param>
         /// <returns></returns>
-        private static int FindNumOfRound(int teamcount)
+        private static int FindNumOfRounds(int teamcount)
         {
             int output = 1;
             int val = 2;
