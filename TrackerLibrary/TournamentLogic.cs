@@ -16,13 +16,26 @@ namespace TrackerLibrary
         public static void CreateRounds(TournamentModel model)
         {
             List<TeamModel> randomziedTeams = RandomizeTeamOrder(model.EnteredTeams);
+            int round = FindNumOfRound(randomziedTeams.Count);
 
         }
 
-        private static int FindNumOfRound(List<TeamModel> teams)
+        /// <summary>
+        /// Returns an int of the number of rounds in the tournament.
+        /// </summary>
+        /// <param name="teamcount"></param>
+        /// <returns></returns>
+        private static int FindNumOfRound(int teamcount)
         {
-            int output = 0;
+            int output = 1;
+            int val = 2;
 
+            while (val < teamcount)
+            {
+                output += 1;
+                val *= 2;
+            }
+            return output;
         }
 
         /// <summary>
