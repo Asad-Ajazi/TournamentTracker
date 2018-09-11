@@ -202,9 +202,26 @@ namespace TrackerLibrary.DataAccess
                     {
                         p = new DynamicParameters();
                         // matchup id from previous foreach.
-                        p.Add("@Matchup_ID", matchup.Id);
-                        p.Add("@ParentMatchup_ID", entry.ParentMatchup);
-                        p.Add("@TeamCompeting_ID", entry.TeamCompeting.id);
+                        p.Add("@Matchup_ID", matchup.Id);     
+                        
+                        if (entry.ParentMatchup == null)
+                        {
+                            p.Add("@ParentMatchup_ID", null);
+                        }
+                        else
+                        {
+                            p.Add("@ParentMatchup_ID", entry.ParentMatchup.Id);
+                        }
+
+                        if (entry.TeamCompeting == null)
+                        {
+                            p.Add("@TeamCompeting_ID", null);
+                        }
+                        else
+                        {
+                            p.Add("@TeamCompeting_ID", entry.TeamCompeting.id);
+                        }
+                        
                         p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                         connection.Execute("dbo.spMatchupEntries_Insert", p, commandType: CommandType.StoredProcedure);
