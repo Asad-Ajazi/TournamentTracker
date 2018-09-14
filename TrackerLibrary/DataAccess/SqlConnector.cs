@@ -224,6 +224,7 @@ namespace TrackerLibrary.DataAccess
                         
                         p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
+                        // sql fk restraint changed
                         connection.Execute("dbo.spMatchupEntries_Insert", p, commandType: CommandType.StoredProcedure);
                     }
                 }
