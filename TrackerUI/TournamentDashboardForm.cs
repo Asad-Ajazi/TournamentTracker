@@ -18,6 +18,13 @@ namespace TrackerUI
         public TournamentDashboardForm()
         {
             InitializeComponent();
+            PopulateList();
+        }
+
+        private void PopulateList()
+        {
+            loadExistingTournamentDropDown.DataSource = tournaments;
+            loadExistingTournamentDropDown.DisplayMember = "TournamentName";
         }
     }
 }
