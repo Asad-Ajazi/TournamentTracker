@@ -162,7 +162,8 @@ namespace TrackerLibrary.DataAccess
                     foreach (TeamModel team in t.EnteredTeams)
                     {
                         p = new DynamicParameters();
-                        p.Add("@Team_ID", t.id);
+                        p.Add("@Team_ID", team.id);
+
                         team.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMember_GetByTeam", p, commandType: CommandType.StoredProcedure).ToList();
                     }
 
