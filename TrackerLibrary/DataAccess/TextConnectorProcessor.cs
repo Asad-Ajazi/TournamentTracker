@@ -140,7 +140,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 }
 
                 // Rounds (the hard part)
-                // TODO - Complete rounds information.
+                // TODO - Complete rounds information. (Discontinued the text connection)
 
 
                 output.Add(tm);

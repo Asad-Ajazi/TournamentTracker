@@ -167,6 +167,7 @@ namespace TrackerLibrary.DataAccess
                         team.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMember_GetByTeam", p, commandType: CommandType.StoredProcedure).ToList();
                     }
 
+                    // TODO - fix round count resetting to 1 every loop.
                     // populate rounds.
                     p = new DynamicParameters();
                     p.Add("@Tournament_ID", t.id);
