@@ -36,6 +36,12 @@ namespace TrackerUI
             tournamentName.Text = tournament.TournamentName;
         }
 
+        private void PopulateList()
+        {
+            roundDropDown.DataSource = null;
+            roundDropDown.DataSource = rounds;
+        }
+
         /// <summary>
         /// loads the rounds for the dropdown
         /// </summary>
@@ -48,6 +54,7 @@ namespace TrackerUI
 
             foreach (List<MatchupModel> matchups in tournament.Rounds)
             {
+                // if (matchups.First().MatchRound > currentRound)
                 if (matchups.First().MatchRound > currentRound)
                 {
                     currentRound = matchups.First().MatchRound;
@@ -57,10 +64,6 @@ namespace TrackerUI
             PopulateList();
         }
 
-        private void PopulateList()
-        {
-            roundDropDown.DataSource = null;
-            roundDropDown.DataSource = rounds;
-        }
+
     }
 }
