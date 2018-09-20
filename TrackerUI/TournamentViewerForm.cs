@@ -82,11 +82,17 @@ namespace TrackerUI
         {
             int round = (int)roundDropDown.SelectedItem;
 
+            // get all the matchups for the round needed and displayed them.
             foreach (List<MatchupModel> matchups in tournament.Rounds)
             {
                 if (matchups.First().MatchupRound == round)
                 {
                     selectedMatchups = matchups;
+                    //selectedMatchups.Clear();
+                    //foreach (var item in matchups)
+                    //{
+                    //    selectedMatchups.Add(item);
+                    //}
                 }
             }
             PopulateMatchupsList();
@@ -113,6 +119,7 @@ namespace TrackerUI
                             teamOneName.Text = m.Entry[0].TeamCompeting.TeamName;
                             teamOneScoreValue.Text = m.Entry[0].Score.ToString();
 
+                            // setting default team two to BYE for first round, will be overwritten in later if.
                             teamTwoName.Text = "<BYE>";
                             teamTwoScoreValue.Text = "0";
                         }

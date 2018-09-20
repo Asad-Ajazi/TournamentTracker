@@ -40,6 +40,7 @@ namespace TrackerLibrary.Models
                 string output = "";
                 foreach (MatchupEntryModel me in Entry)
                 {
+                    // TODO - does not display correctly if 5 or more teams.
                     if (me.TeamCompeting != null)
                     {
                         if (output.Length == 0)
