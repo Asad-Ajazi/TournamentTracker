@@ -15,6 +15,7 @@ namespace TrackerUI
     {
         private TournamentModel tournament;
         List<int> rounds = new List<int>();
+        List<MatchupModel> selectedMatchups = new List<MatchupModel>();
 
         public TournamentViewerForm(TournamentModel tournamentModel)
         {
@@ -23,7 +24,6 @@ namespace TrackerUI
             tournament = tournamentModel;
 
             LoadFormData();
-
             LoadRounds();
 
         }
@@ -36,10 +36,17 @@ namespace TrackerUI
             tournamentName.Text = tournament.TournamentName;
         }
 
-        private void PopulateList()
+        private void PopulateRoundsList()
         {
             roundDropDown.DataSource = null;
             roundDropDown.DataSource = rounds;
+        }
+
+        private void PopulateMatchupsList()
+        {
+            matchupListBox.DataSource = null;
+            matchupListBox.DataSource = selectedMatchups;
+            matchupListBox.DisplayMember = "DisplayName";
         }
 
         /// <summary>
@@ -53,17 +60,33 @@ namespace TrackerUI
             int currentRound = 1;
 
             foreach (List<MatchupModel> matchups in tournament.Rounds)
-            {
-                // if (matchups.First().MatchupRound > currentRound)
+            {                
                 if (matchups.First().MatchupRound > currentRound)
                 {
                     currentRound = matchups.First().MatchupRound;
                     rounds.Add(currentRound);
                 }
             }
-            PopulateList();
+            PopulateRoundsList();
         }
 
+        private void roundDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadMatchups();
+        }
 
+        private void LoadMatchups()
+        {
+            int round = (int)roundDropDown.SelectedItem;
+
+            foreach (List<MatchupModel> matchups in tournament.Rounds)
+            {
+                if (matchups.First().MatchupRound == round)
+                {
+                    selectedMatchups = matchups;
+                }
+            }
+            PopulateMatchupsList();
+        }
     }
 }
