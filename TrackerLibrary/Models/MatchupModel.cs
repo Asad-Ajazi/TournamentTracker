@@ -31,6 +31,8 @@ namespace TrackerLibrary.Models
         /// <summary>
         /// The round number.
         /// </summary>
-        public int MatchRound { get; set; }
+        public int MatchupRound { get; set; }
+
+       // public int MatchupRound { get; set; }
     }
 }

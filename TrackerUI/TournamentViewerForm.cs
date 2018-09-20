@@ -54,10 +54,10 @@ namespace TrackerUI
 
             foreach (List<MatchupModel> matchups in tournament.Rounds)
             {
-                // if (matchups.First().MatchRound > currentRound)
-                if (matchups.First().MatchRound > currentRound)
+                // if (matchups.First().MatchupRound > currentRound)
+                if (matchups.First().MatchupRound > currentRound)
                 {
-                    currentRound = matchups.First().MatchRound;
+                    currentRound = matchups.First().MatchupRound;
                     rounds.Add(currentRound);
                 }
             }

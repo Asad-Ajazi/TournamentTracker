@@ -46,7 +46,7 @@ namespace TrackerLibrary
 
                     if (currentMatchup.Entry.Count > 1)
                     {
-                        currentMatchup.MatchRound = round;
+                        currentMatchup.MatchupRound = round;
                         currentRound.Add(currentMatchup);
                         currentMatchup = new MatchupModel();
                     }
@@ -79,7 +79,7 @@ namespace TrackerLibrary
                 if (byes > 0 || current.Entry.Count > 1)
                 {
                     // first round will always be hard coded to 1.
-                    current.MatchRound = 1;
+                    current.MatchupRound = 1;
                     output.Add(current);
                     current = new MatchupModel();
 

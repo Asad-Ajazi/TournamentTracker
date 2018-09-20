@@ -167,11 +167,12 @@ namespace TrackerLibrary.DataAccess
                         team.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMember_GetByTeam", p, commandType: CommandType.StoredProcedure).ToList();
                     }
 
-                    // TODO - fix round count resetting to 1 every loop.
+                    
                     // populate rounds.
                     p = new DynamicParameters();
                     p.Add("@Tournament_ID", t.id);
 
+                    
                     List<MatchupModel> matchups = connection.Query<MatchupModel>("dbo.spMatchup_GetByTournament", p, commandType: CommandType.StoredProcedure).ToList();
 
                     foreach (MatchupModel m in matchups)
@@ -210,7 +211,8 @@ namespace TrackerLibrary.DataAccess
                     
                     foreach (MatchupModel m in matchups)
                     {
-                        if (m.MatchRound > currentRound)
+                        
+                        if (m.MatchupRound > currentRound)
                         {
                             //loops through adding to rounds when no more rounds, then moves to next round.
                             t.Rounds.Add(currentRow);
@@ -282,7 +284,7 @@ namespace TrackerLibrary.DataAccess
                 {
                     var p = new DynamicParameters();
                     p.Add("@Tournament_ID", model.id);
-                    p.Add("@MatchupRound", matchup.MatchRound);
+                    p.Add("@MatchupRound", matchup.MatchupRound);
                     p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                     connection.Execute("dbo.spMatchup_Insert", p, commandType: CommandType.StoredProcedure);
