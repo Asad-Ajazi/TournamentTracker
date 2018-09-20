@@ -75,6 +75,9 @@ namespace TrackerUI
             LoadMatchups();
         }
 
+        /// <summary>
+        /// loads list of matchups for the rounds
+        /// </summary>
         private void LoadMatchups()
         {
             int round = (int)roundDropDown.SelectedItem;
@@ -87,6 +90,59 @@ namespace TrackerUI
                 }
             }
             PopulateMatchupsList();
+        }
+
+        /// <summary>
+        /// loads a singular matchup for the selected matchup.
+        /// </summary>
+        private void LoadMatchup()
+        {
+            // additional check to make sure lists do not reset m to null. 
+            if (matchupListBox.SelectedItem != null)
+            {
+
+
+                MatchupModel m = (MatchupModel)matchupListBox.SelectedItem;
+
+                for (int i = 0; i < m.Entry.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        if (m.Entry[0].TeamCompeting != null)
+                        {
+                            teamOneName.Text = m.Entry[0].TeamCompeting.TeamName;
+                            teamOneScoreValue.Text = m.Entry[0].Score.ToString();
+
+                            teamTwoName.Text = "<BYE>";
+                            teamTwoScoreValue.Text = "0";
+                        }
+                        else
+                        {
+                            teamOneName.Text = "Not Yet Set";
+                            teamOneScoreValue.Text = "";
+                        }
+                    }
+
+                    if (i == 1)
+                    {
+                        if (m.Entry[1].TeamCompeting != null)
+                        {
+                            teamTwoName.Text = m.Entry[1].TeamCompeting.TeamName;
+                            teamTwoScoreValue.Text = m.Entry[1].Score.ToString();
+                        }
+                        else
+                        {
+                            teamTwoName.Text = "Not Yet Set";
+                            teamTwoScoreValue.Text = "";
+                        }
+                    }
+                }
+            }
+        }
+
+        private void matchupListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadMatchup();
         }
     }
 }
