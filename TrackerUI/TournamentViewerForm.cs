@@ -155,5 +155,71 @@ namespace TrackerUI
         {
             LoadMatchups((int)roundDropDown.SelectedItem);
         }
+
+        private void scoreButton_Click(object sender, EventArgs e)
+        {
+            MatchupModel m = (MatchupModel)matchupListBox.SelectedItem;
+
+            double teamOneScore = 0;
+            double teamTwoScore = 0;
+
+            for (int i = 0; i < m.Entry.Count; i++)
+            {
+                // loop through team one.
+                if (i == 0)
+                {
+                    if (m.Entry[0].TeamCompeting != null)
+                    {
+                        bool scoreValid = double.TryParse(teamOneScoreValue.Text, out teamOneScore);
+
+                        if (scoreValid)
+                        {
+                            m.Entry[0].Score = teamOneScore;
+                        }
+                        else
+                        {
+                            // return is incorrect information is supplied.
+                            MessageBox.Show("Please enter a valid score for team 1");
+                            return;
+                        }
+                    }
+                }
+
+                // loop through team two.
+                if (i == 1)
+                {
+                    if (m.Entry[1].TeamCompeting != null)
+                    {
+                        bool scoreValid = double.TryParse(teamTwoScoreValue.Text, out teamTwoScore);
+
+                        if (scoreValid)
+                        {
+                            m.Entry[1].Score = teamTwoScore;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please enter a valid score for team 2");
+                            return;
+                        }
+                    }
+                }
+            }
+
+            if (teamOneScore > teamTwoScore)
+            {
+                // team one wins.
+                m.Winner = m.Entry[0].TeamCompeting;
+            }
+            else if (teamTwoScore > teamOneScore)
+            {
+                // team two wins
+                m.Winner = m.Entry[1].TeamCompeting;
+            }
+            else
+            {
+                MessageBox.Show("We don't have ties around here, play a sudden death round!");
+            }
+            PopulateList();
+        }
     }
 }
