@@ -38,6 +38,9 @@ namespace TrackerUI
             tournamentName.Text = tournament.TournamentName;
         }
 
+        /// <summary>
+        /// populates the dropdown and listbox.
+        /// </summary>
         private void PopulateList()
         {
             roundDropDown.DataSource = rounds;
@@ -87,7 +90,11 @@ namespace TrackerUI
                     selectedMatchups.Clear();
                     foreach (MatchupModel m in matchups)
                     {
-                        selectedMatchups.Add(m);
+                        // add if there is no winner, or is checkbox is not checked.
+                        if (m.Winner == null || !unplayedOnlyCheckBox.Checked)
+                        {
+                            selectedMatchups.Add(m);
+                        }
                     }
                 }
             }
@@ -102,10 +109,6 @@ namespace TrackerUI
             // additional check to make sure lists do not reset m to null. 
             if (matchupListBox.SelectedItem != null)
             {
-
-
-                // MatchupModel m = (MatchupModel)matchupListBox.SelectedItem;
-
                 for (int i = 0; i < m.Entry.Count; i++)
                 {
                     if (i == 0)
@@ -146,6 +149,11 @@ namespace TrackerUI
         private void matchupListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadMatchup((MatchupModel)matchupListBox.SelectedItem);
+        }
+
+        private void unplayedOnlyCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadMatchups((int)roundDropDown.SelectedItem);
         }
     }
 }
