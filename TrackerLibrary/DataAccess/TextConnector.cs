@@ -117,5 +117,10 @@ namespace TrackerLibrary.DataAccess
             // Discontinued text implementation, Possibly add in the future.
             throw new NotImplementedException();
         }
+
+        public void UpdateMatchup(MatchupModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
