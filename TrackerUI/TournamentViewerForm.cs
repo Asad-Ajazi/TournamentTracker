@@ -239,7 +239,8 @@ namespace TrackerUI
             {
                 MessageBox.Show("We don't have ties around here, play a sudden death round!");
             }
-            PopulateList();
+            // refrehes list when score button is clicked and checkbox is checked to auto refresh and remove it from the list.
+            LoadMatchups((int)roundDropDown.SelectedItem);
         }
     }
 }
