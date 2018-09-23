@@ -93,7 +93,10 @@ namespace TrackerLibrary.DataAccess
                 SaveTournamentPrizes(connection, model);
                 SaveTournamentEntries(connection, model);
                 SaveTournamentRounds(connection, model);
-                //return model;
+
+                // updates by weeks after everything is saved.
+                TournamentLogic.UpdateTournamentResults(model);
+                
             }
         }
 

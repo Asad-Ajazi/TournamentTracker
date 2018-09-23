@@ -130,7 +130,7 @@ namespace TrackerUI
             // Create the prize entries.
             // Create the team entries. (in this specific order so they work with the database)
             GlobalConfig.Connection.CreateTournament(tm);
-            
+
             TournamentViewerForm frm = new TournamentViewerForm(tm);
             frm.Show();
             this.Close();
