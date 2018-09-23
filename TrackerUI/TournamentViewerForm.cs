@@ -226,43 +226,10 @@ namespace TrackerUI
                 }
             }
 
-            if (teamOneScore > teamTwoScore)
-            {
-                // team one wins.
-                m.Winner = m.Entry[0].TeamCompeting;
-            }
-            else if (teamTwoScore > teamOneScore)
-            {
-                // team two wins
-                m.Winner = m.Entry[1].TeamCompeting;
-            }
-            else
-            {
-                MessageBox.Show("We don't have ties around here, play a sudden death round!");
-            }
-
-            foreach (List<MatchupModel> round in tournament.Rounds)
-            {
-                foreach (MatchupModel rm in round)
-                {
-                    foreach (MatchupEntryModel me in rm.Entry)
-                    {
-                        if (me.ParentMatchup != null)
-                        {
-                            if (me.ParentMatchup.Id == m.Id)
-                            {
-                                me.TeamCompeting = m.Winner;
-                                GlobalConfig.Connection.UpdateMatchup(rm);
-                            } 
-                        }
-                    }
-                }
-            }
+            TournamentLogic.UpdateTournamentResults(tournament);
 
             // refrehes list when score button is clicked and checkbox is checked to auto refresh and remove it from the list.
             LoadMatchups((int)roundDropDown.SelectedItem);
-
-            GlobalConfig.Connection.UpdateMatchup(m);
         }
     }
 }

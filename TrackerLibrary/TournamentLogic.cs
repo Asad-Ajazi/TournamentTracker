@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,122 @@ namespace TrackerLibrary
 
             model.Rounds.Add(CreateFirstRound(byes, randomziedTeams));
             CreateOtherRounds(model, round);
+            UpdateTournamentResults(model);
+        }
 
+        public static void UpdateTournamentResults(TournamentModel model)
+        {
+            List<MatchupModel> toScore = new List<MatchupModel>();
+            foreach (List<MatchupModel> round in model.Rounds)
+            {
+                foreach (MatchupModel rm in round)
+                {
+                    // count of 1 indicates a bye, 
+                    if (rm.Winner == null && (rm.Entry.Any(x => x.Score != 0) || rm.Entry.Count == 1))
+                    {
+                        toScore.Add(rm);
+                    }
+                }
+            }
+
+            MarkMatchupWinner(toScore);
+
+            AdvanceWinners(toScore, model);
+
+            // GlobalConfig.Connection.UpdateMatchup(m);
+            toScore.ForEach(x => GlobalConfig.Connection.UpdateMatchup(x));
+            
+
+
+
+        }
+
+        private static void AdvanceWinners(List<MatchupModel> models, TournamentModel tournament)
+        {
+            foreach (MatchupModel m in models)
+            {
+                foreach (List<MatchupModel> round in tournament.Rounds)
+                {
+                    foreach (MatchupModel rm in round)
+                    {
+                        foreach (MatchupEntryModel me in rm.Entry)
+                        {
+                            if (me.ParentMatchup != null)
+                            {
+                                if (me.ParentMatchup.Id == m.Id)
+                                {
+                                    me.TeamCompeting = m.Winner;
+                                    GlobalConfig.Connection.UpdateMatchup(rm);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void MarkMatchupWinner(List<MatchupModel> models)
+        {
+            // greater or lower
+            string greaterWins = ConfigurationManager.AppSettings["greaterWins"];
+
+            foreach (MatchupModel m in models)
+            {
+                // checks for bye entry.
+                if (m.Entry.Count == 1)
+                {
+                    m.Winner = m.Entry[0].TeamCompeting;
+                    continue;
+                }
+
+                // 0 = false, else low score wins.
+                if (greaterWins == "0")
+                {
+                    if (m.Entry[0].Score < m.Entry[1].Score)
+                    {
+                        m.Winner = m.Entry[0].TeamCompeting;
+                    }
+                    else if (m.Entry[1].Score < m.Entry[0].Score)
+                    {
+                        m.Winner = m.Entry[1].TeamCompeting;
+                    }
+                    else
+                    {
+                        throw new Exception("Ties are not allowed in this application");
+                    }
+                }
+                else
+                {
+                    // 1 means true, or high score wins.
+                    if (m.Entry[0].Score > m.Entry[1].Score)
+                    {
+                        m.Winner = m.Entry[0].TeamCompeting;
+                    }
+                    else if (m.Entry[1].Score > m.Entry[0].Score)
+                    {
+                        m.Winner = m.Entry[1].TeamCompeting;
+                    }
+                    else
+                    {
+                        throw new Exception("Ties are not allowed in this application");
+                    }
+                } 
+            }
+
+            //if (teamOneScore > teamTwoScore)
+            //{
+            //     team one wins.
+            //    m.Winner = m.Entry[0].TeamCompeting;
+            //}
+            //else if (teamTwoScore > teamOneScore)
+            //{
+            //     team two wins
+            //    m.Winner = m.Entry[1].TeamCompeting;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("We don't have ties around here, play a sudden death round!");
+            //}
         }
 
         /// <summary>
