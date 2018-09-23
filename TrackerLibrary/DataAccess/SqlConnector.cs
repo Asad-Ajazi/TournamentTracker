@@ -13,7 +13,7 @@ namespace TrackerLibrary.DataAccess
     {
         private const string dbName = "Tournaments";
 
-        public PersonModel CreatePerson(PersonModel model)
+        public void CreatePerson(PersonModel model)
         {
             // using statement destroys the connection at the end of the closing curly brace }
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConString(dbName)))
@@ -30,8 +30,6 @@ namespace TrackerLibrary.DataAccess
 
                 //sets the model.id to the value of the id that was inserted.
                 model.Id = p.Get<int>("@id");
-
-                return model;
             }
         }
 
@@ -40,7 +38,7 @@ namespace TrackerLibrary.DataAccess
         /// </summary>
         /// <param name="model">Prize information</param>
         /// <returns>Prize information including id</returns>
-        public PrizeModel CreatePrize(PrizeModel model)
+        public void CreatePrize(PrizeModel model)
         {
             // using statement destroys the connection at the end of the closing curly brace }
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConString(dbName)))
@@ -56,13 +54,11 @@ namespace TrackerLibrary.DataAccess
 
                 //sets the model.id to the value of the id that was inserted.
                 model.Id = p.Get<int>("@id");
-
-                return model;
             }
 
         }
 
-        public TeamModel CreateTeam(TeamModel model)
+        public void CreateTeam(TeamModel model)
         {
             // using statement destroys the connection at the end of the closing curly brace }
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.ConString(dbName)))
@@ -85,8 +81,6 @@ namespace TrackerLibrary.DataAccess
 
                     connection.Execute("dbo.spTeamMember_Insert", p, commandType: CommandType.StoredProcedure);
                 }
-
-                return model;
             }
         }
 

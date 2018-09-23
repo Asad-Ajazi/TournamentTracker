@@ -8,6 +8,7 @@ using TrackerLibrary.DataAccess.TextHelpers;
 
 namespace TrackerLibrary.DataAccess
 {
+    // saving to text file was discontuined, implemented functions still work.
     public class TextConnector : IDataConnection
     {
 
@@ -17,7 +18,7 @@ namespace TrackerLibrary.DataAccess
         private const string TeamFile = "TeamModels.csv";
         private const string TournamentFile = "TournamentModels.csv";
 
-        public PersonModel CreatePerson(PersonModel model)
+        public void CreatePerson(PersonModel model)
         {
             //read all the people in the text file.
             List<PersonModel> person = PersonFile.FullFilePath().LoadFile().ConvertToPersonModels();
@@ -38,12 +39,9 @@ namespace TrackerLibrary.DataAccess
             // Convert prizes to list<string>.
             // Save list<string> to text file.
             person.SaveToPersonFile(PersonFile);
-
-            return model;
-
         }
 
-        public PrizeModel CreatePrize(PrizeModel model)
+        public void CreatePrize(PrizeModel model)
         {           
             //Loads the text file and converts it to a List<PrizeModel>
             List<PrizeModel> prizes = PrizesFile.FullFilePath().LoadFile().ConvertToPrizeModels();
@@ -64,10 +62,9 @@ namespace TrackerLibrary.DataAccess
             // Convert prizes to list<string>.
             // Save list<string> to text file.
             prizes.SaveToPrizesFile(PrizesFile);
-            return model;
         }
 
-        public TeamModel CreateTeam(TeamModel model)
+        public void CreateTeam(TeamModel model)
         {
             List<TeamModel> teams = TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(PersonFile);
 
@@ -82,7 +79,6 @@ namespace TrackerLibrary.DataAccess
             teams.Add(model);
 
             teams.SaveToTeamFile(TeamFile);
-            return model;
         }
 
         public void CreateTournament(TournamentModel model)
