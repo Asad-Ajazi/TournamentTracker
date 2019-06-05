@@ -2,6 +2,10 @@
 
 A single elimination tournament tracker written in c#
 
-Allows for teams to be created, members to be added, and tournament logic is carried out to randomly generate a bracket once each match in the current round is played. 
+This application is designed to be used for both team based and individual style tournaments.
+
+The owner of a tournament is able to create the tournament and assign and entry fee. Prizes are then created which will go to the first, second and third placed teams. This could be a cash prize that is a percentage of the total sum collected from the entry fee, or any other sum of money or item. 
+
+Users are able to create a team and add any number of players, these team will then randomly be assigned a matchup in their bracket and the loser of the matchup is immediately eliminated from the tournament. If there is an odd number of teams, a randomly selected team will automatically move on to the next round. After the final match has been completed a winner is declared and the prizes are distributed.
 
 Application is currently implemented in WinForms but will eventually be transfered to other UI's such as WPF or MVC using created class library that holds the majority of the logic. 
