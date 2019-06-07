@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrackerLibrary
 {
-    //class Enums
-    //{
-    //}
+    // Enum to select what data storage is being used.
 
     public enum DatabaseType
     {

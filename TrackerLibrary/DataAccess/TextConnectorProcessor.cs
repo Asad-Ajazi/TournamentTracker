@@ -18,6 +18,7 @@ using TrackerLibrary.Models;
 // Namespace to .TextConnector to limit the classes that can directly use it.
 namespace TrackerLibrary.DataAccess.TextHelpers
 {
+    // Discontinued, replaced with sql server database. Implementation still works.
     #region static helper methods
     public static class TextConnectorProcessor
     {

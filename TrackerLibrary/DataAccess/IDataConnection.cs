@@ -9,7 +9,7 @@ namespace TrackerLibrary.DataAccess
 {
     public interface IDataConnection
     {
-        // before refactoring
+        // Data connection interface, all data connection classes must implement this interface.
         void CreatePrize(PrizeModel model);
         void CreatePerson(PersonModel model);
         void CreateTeam(TeamModel model);
