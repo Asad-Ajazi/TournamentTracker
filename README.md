@@ -13,7 +13,7 @@ Application is currently implemented in WinForms but will eventually be transfer
 ## What I Learnt
 - Turning requirements into design documentation to begin planning.
 - Using the Dapper framework to execute T-SQL stored procedures in a SQL-Server database.
-- Development with WinForms UI to create a fullly working application.
+- Development with WinForms UI to create a fully working application.
 - Debugging and Manually testing code to ensure robustness (Future project will likely use unit testing).
 - How to write complex logic to meet business requirement.
-- The improtance of writing clean code.
+- The importance of writing clean code.
